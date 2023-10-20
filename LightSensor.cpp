@@ -2,6 +2,10 @@
 #include "mbed.h"
 #include <string>
 
+LightSensor::LightSensor(PinName pin) : _pin(pin){
+    _pin = 0;
+}
+
 string LightSensor::getClosestCondition(float lux, int i){
     float rest1, rest2;
     rest1 = minValues[i] - lux;
@@ -15,9 +19,10 @@ string LightSensor::getClosestCondition(float lux, int i){
     
 }
 
-string LightSensor::getLightCondition(float readValue){
-     int i=0;
+string LightSensor::getLightCondition(){
+    int i=0;
     float lux=NULL;
+    float readValue = _pin.read_u16();
     //First we calculated the quantity of light
     lux = (((VRef*LuxRel)*readValue)-LuxRel)/RI;
 
